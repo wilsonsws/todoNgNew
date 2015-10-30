@@ -1,0 +1,53 @@
+doctype html
+html
+  link(rel='stylesheet', href='http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css')
+  script(src='http://apps.bdimg.com/libs/angular.js/1.3.9/angular.min.js')
+  body(ng-app='myApp', ng-controller='userCtrl')
+    .container
+      h3 AngularJS TODO
+      h4 by wilsonsws
+      table.table.table-striped
+        thead
+          tr
+            th Action
+            th Content
+            th Statue
+        tbody
+          tr(ng-repeat='user in users')
+            td
+              button.btn(ng-click='changeFinish(user.id)', ng-disabled='user.fstatus')
+                span.glyphicon.glyphicon-pencil
+                |   Finished
+              
+              button.btn(ng-click='changeRelease(user.id)', ng-disabled='!user.fstatus')
+                span.glyphicon.glyphicon-pencil
+                |   Release
+              
+              button.btn(ng-click='editUser(user.id)')
+                span.glyphicon.glyphicon-pencil
+                |   Edit
+            td(ng-show='user.fstatus') {{ user.content }}
+            td(ng-hide='user.fstatus', style='color:red') {{ user.content }}
+            td(ng-show='user.fstatus') Done
+            td(ng-hide='user.fstatus', style='color:red') Undo
+      hr
+      button.btn.btn-success(ng-click="editUser('new')")
+        span.glyphicon.glyphicon-user
+        |  Create New User
+      hr
+      h3(ng-show='edit') Create New TODO:
+      h3(ng-hide='edit') Edit Previous TODO:
+      form.form-horizontal
+        .form-group
+          label.col-sm-2.control-label ID:
+          .col-sm-10
+            input(type='text', ng-model='id', ng-disabled='true', placeholder='ID')
+        .form-group
+          label.col-sm-2.control-label content:
+          .col-sm-10
+            input(type='text', ng-model='content', placeholder='Input content')
+      hr
+      button.btn.btn-success(ng-disabled='!incomplete', ng-click='updateItem()')
+        span.glyphicon.glyphicon-save
+        |  Save Changes
+    script(src='myUsers.js')
